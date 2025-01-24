@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: oklch(70% 0.1 223);
+  --color-secondary: ;
+  --color-accent: ;
+  --color-black: ;
+  --color-white: ;
+  --color-success: ;
+  --color-warning: ;
+  --color-danger: ;
+  --color-info: ;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
