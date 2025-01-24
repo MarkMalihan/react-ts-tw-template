@@ -4,8 +4,8 @@
   --color-primary: oklch(70% 0.1 223);
   --color-secondary: ;
   --color-accent: ;
-  --color-black: ;
-  --color-white: ;
+  --color-black: #3b3b3b;
+  --color-white: #fefefe;
   --color-success: ;
   --color-warning: ;
   --color-danger: ;

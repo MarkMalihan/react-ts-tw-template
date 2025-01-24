@@ -6,7 +6,7 @@ function App() {
 
   return (
     <Suspense fallback={<SplashScreen />}>
-      <div className="dotted-background dark:bg-black">
+      <div className="min-h-screen h-auto dark:bg-black">
         <Router />
       </div>
     </Suspense>
