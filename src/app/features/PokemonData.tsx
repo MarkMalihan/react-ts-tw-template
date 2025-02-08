@@ -3,7 +3,7 @@ import { Pokemon } from "@/models/AppModels";
 import { searchPokemon } from "@/services/SampleService";
 import { Button } from "@/components/ui/Button";
 
-const PokemonData: React.FC = () => {
+const PokemonData = () => {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -108,22 +108,22 @@ const PokemonData: React.FC = () => {
             {pokemon.name}
           </h1>
           <p className="text-gray-600 dark:text-gray-300 mt-2">
-            <strong>ID:</strong> {pokemon.id}
+            <span className="font-bold">ID:</span> {pokemon.id}
           </p>
           <p className="text-gray-600 dark:text-gray-300 mt-2">
-            <strong>Height:</strong> {pokemon.height / 10} m
+            <span className="font-bold">Height:</span> {pokemon.height / 10} m
           </p>
           <p className="text-gray-600 dark:text-gray-300 mt-2">
-            <strong>Weight:</strong> {pokemon.weight / 10} kg
+            <span className="font-bold">Weight:</span> {pokemon.weight / 10} kg
           </p>
           <p className="text-gray-600 dark:text-gray-300 mt-2">
-            <strong>Abilities:</strong>{" "}
+            <span>Abilities:</span>{" "}
             {pokemon.abilities
               .map((ability) => ability.ability.name)
               .join(", ")}
           </p>
           <p className="mt-2">
-            <strong className="text-gray-600 dark:text-gray-300">Types:</strong>{" "}
+            <span className="text-gray-600 dark:text-gray-300">Types:</span>{" "}
             {pokemon.types.map((type) => (
               <span
                 key={type.type.name}

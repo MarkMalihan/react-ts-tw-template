@@ -1,15 +1,54 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: oklch(70% 0.1 223);
-  --color-secondary: ;
-  --color-accent: ;
+  /* Primary */
+  --color-primary-mild: oklch(85% 0.08 223);
+  --color-primary: oklch(70% 0.1 223); /* Base */
+  --color-primary-bold: oklch(50% 0.13 223);
+
+  /* Secondary */
+  --color-secondary-mild: oklch(85% 0.08 300);
+  --color-secondary: oklch(70% 0.1 300);
+  --color-secondary-bold: oklch(50% 0.13 300);
+
+  /* Accent */
+  --color-accent-mild: oklch(85% 0.08 150);
+  --color-accent: oklch(70% 0.1 150);
+  --color-accent-bold: oklch(50% 0.13 150);
+
+  /* Neutral */
+  --color-neutral-mild: oklch(85% 0.02 250);
+  --color-neutral: oklch(70% 0.03 250);
+  --color-neutral-bold: oklch(50% 0.05 250);
+
+  /* Success */
+  --color-success-mild: oklch(85% 0.08 140);
+  --color-success: oklch(70% 0.1 140);
+  --color-success-bold: oklch(50% 0.13 140);
+
+  /* Warning */
+  --color-warning-mild: oklch(85% 0.08 50);
+  --color-warning: oklch(70% 0.1 50);
+  --color-warning-bold: oklch(50% 0.13 50);
+
+  /* Danger */
+  --color-danger-mild: oklch(85% 0.08 30);
+  --color-danger: oklch(70% 0.1 30);
+  --color-danger-bold: oklch(50% 0.13 30);
+
+  /* Info */
+  --color-info-mild: oklch(85% 0.08 200);
+  --color-info: oklch(70% 0.1 200);
+  --color-info-bold: oklch(50% 0.13 200);
+
+  /* Black & White Variants */
+  --color-black-mild: #6d6d6d;
   --color-black: #3b3b3b;
+  --color-black-bold: #1c1c1c;
+
+  --color-white-mild: #ffffff;
   --color-white: #fefefe;
-  --color-success: ;
-  --color-warning: ;
-  --color-danger: ;
-  --color-info: ;
+  --color-white-bold: #e0e0e0;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

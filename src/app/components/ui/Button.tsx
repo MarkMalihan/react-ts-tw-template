@@ -26,7 +26,6 @@ export const Button = ({
         "bg-accent text-black": variant === "accent",
         "bg-white text-black hover:bg-gray-100": variant === "light",
         "bg-black text-white hover:bg-gray-700": variant === "dark",
-        "shadow-neumorphic-light": variant === "neumorphism-primary",
         "opacity-50 cursor-not-allowed": props.disabled,
       },
       className
