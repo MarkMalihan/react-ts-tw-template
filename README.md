@@ -1,6 +1,6 @@
-# React TypeScript Tailwind Template
+React TypeScript Tailwind Template
 
-This is a starter template for building React applications using TypeScript, Tailwind CSS, and Vite. It is designed to streamline the development process by integrating essential tools and libraries, including Tailwind Merge, CLSX, and React Router DOM.
+This is a starter template for building React applications using TypeScript, Tailwind CSS, and Vite. It is designed to streamline the development process by integrating essential tools and libraries, including Tailwind Merge, CLSX, React Router DOM, and Vitest for unit testing.
 
 ## Features
 
@@ -11,6 +11,7 @@ This is a starter template for building React applications using TypeScript, Tai
 - **Tailwind Merge**: Safely merge Tailwind CSS classes.
 - **CLSX**: A utility for conditionally joining class names.
 - **React Router DOM**: Routing library for creating dynamic navigation.
+- **Vitest**: A blazing-fast unit testing framework.
 
 ## Getting Started
 
@@ -25,7 +26,7 @@ Make sure you have the following installed on your system:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/react-ts-tailwind-template.git
+   git clone https://github.com/MarkMalihan/react-ts-tailwind-template.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -48,7 +49,7 @@ npm run dev
 yarn dev
 ```
 
-The application will be available at `http://localhost:5173`.
+The application will be available at [http://localhost:5173](http://localhost:5173).
 
 ### Build
 
@@ -70,6 +71,24 @@ To preview the production build locally:
 npm run preview
 # or
 yarn preview
+```
+
+### Testing
+
+Run unit tests using Vitest:
+
+```bash
+npm run test
+# or
+yarn test
+```
+
+Run unit tests for a specific test file:
+
+```bash
+npx vitest path/to/test-file.test.tsx
+# or
+yarn vitest path/to/test-file.test.tsx
 ```
 
 ## Project Structure
@@ -137,18 +156,19 @@ const Button = ({ isActive }: { isActive: boolean }) => {
 
 - `npm run dev`: Start the development server.
 - `npm run build`: Build the application for production.
-- `npm run preview`: Preview the production build locally.
-- `npm run lint`: Run linter to check for code issues.
+- `npm run test`: Run unit tests with Vitest.
+- `npx vitest path/to/test-file.test.tsx`: Run tests for a specific file.
 
 ## Dependencies
 
 - **React**: ^18.x
 - **TypeScript**: ^5.x
-- **Tailwind CSS**: ^3.x
-- **Vite**: ^4.x
-- **tailwind-merge**: ^1.x
+- **Tailwind CSS**: ^4.x
+- **Vite**: ^6.x
+- **tailwind-merge**: ^2.x
 - **clsx**: ^2.x
-- **react-router-dom**: ^6.x
+- **react-router-dom**: ^7.x
+- **Vitest**: ^3.x
 
 ## License
 
@@ -156,4 +176,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ---
 
-Enjoy building your next project with this template!
+Enjoy building your next project with this template! 🚀
