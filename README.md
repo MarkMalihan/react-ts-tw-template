@@ -1,4 +1,4 @@
-React TypeScript Tailwind Template
+# React TypeScript Tailwind Template
 
 This is a starter template for building React applications using TypeScript, Tailwind CSS, and Vite. It is designed to streamline the development process by integrating essential tools and libraries, including Tailwind Merge, CLSX, React Router DOM, and Vitest for unit testing.
 
@@ -12,6 +12,7 @@ This is a starter template for building React applications using TypeScript, Tai
 - **CLSX**: A utility for conditionally joining class names.
 - **React Router DOM**: Routing library for creating dynamic navigation.
 - **Vitest**: A blazing-fast unit testing framework.
+- **Prettier**: A code formatter for consistent styling.
 
 ## Getting Started
 
@@ -71,6 +72,16 @@ To preview the production build locally:
 npm run preview
 # or
 yarn preview
+```
+
+### Formatting Code
+
+Format code using Prettier:
+
+```bash
+npm run format
+# or
+yarn format
 ```
 
 ### Testing
@@ -144,11 +155,42 @@ Use **clsx** and **tailwind-merge** to conditionally and safely manage class nam
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 
-const Button = ({ isActive }: { isActive: boolean }) => {
-  const buttonClass = twMerge(
-    clsx("px-4 py-2", isActive ? "bg-blue-500" : "bg-gray-500")
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?:
+    | "primary"
+    | "secondary"
+    | "accent"
+    | "light"
+    | "dark"
+    | "neumorphism-primary";
+};
+
+export const Button = ({
+  children,
+  variant = "primary",
+  className,
+  ...props
+}: ButtonProps) => {
+  const buttonClasses = twMerge(
+    clsx(
+      "px-4 py-2 font-medium rounded transition-colors duration-300",
+      {
+        "bg-blue-500 text-white hover:bg-blue-600": variant === "primary",
+        "bg-gray-300 text-black hover:bg-gray-400": variant === "secondary",
+        "bg-accent text-black": variant === "accent",
+        "bg-white text-black hover:bg-gray-100": variant === "light",
+        "bg-black text-white hover:bg-gray-700": variant === "dark",
+        "opacity-50 cursor-not-allowed": props.disabled,
+      },
+      className
+    )
   );
-  return <button className={buttonClass}>Click Me</button>;
+
+  return (
+    <button className={buttonClasses} {...props}>
+      {children}
+    </button>
+  );
 };
 ```
 
@@ -157,7 +199,8 @@ const Button = ({ isActive }: { isActive: boolean }) => {
 - `npm run dev`: Start the development server.
 - `npm run build`: Build the application for production.
 - `npm run test`: Run unit tests with Vitest.
-- `npx vitest path/to/test-file.test.tsx`: Run tests for a specific file.
+- `npx run test path/to/test-file.test.tsx`: Run tests for a specific file.
+- `npm run format`: Format code using Prettier.
 
 ## Dependencies
 
