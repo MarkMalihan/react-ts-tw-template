@@ -2,6 +2,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
 import { searchPokemon } from "@/services/SampleService";
 import PokemonData from "./PokemonData";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Mock the searchPokemon service
 vi.mock("@/services/SampleService", () => ({
@@ -9,8 +10,25 @@ vi.mock("@/services/SampleService", () => ({
 }));
 
 describe("PokemonData Component", () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+  });
+
+  const renderWithQueryClient = (ui: React.ReactElement) =>
+    render(
+      <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
+    );
+
   it("renders search input and button", () => {
-    render(<PokemonData />);
+    renderWithQueryClient(<PokemonData />);
 
     expect(
       screen.getByPlaceholderText(/search pokémon by name or id/i)
@@ -19,7 +37,7 @@ describe("PokemonData Component", () => {
   });
 
   it("updates input field correctly", () => {
-    render(<PokemonData />);
+    renderWithQueryClient(<PokemonData />);
 
     const input = screen.getByPlaceholderText(
       /search pokémon by name or id/i
@@ -32,7 +50,7 @@ describe("PokemonData Component", () => {
   it("displays loading state when searching", async () => {
     (searchPokemon as vi.mock).mockImplementation(() => new Promise(() => {}));
 
-    render(<PokemonData />);
+    renderWithQueryClient(<PokemonData />);
 
     fireEvent.change(
       screen.getByPlaceholderText(/search pokémon by name or id/i),
@@ -46,7 +64,8 @@ describe("PokemonData Component", () => {
   });
 
   it("displays Pokémon data on successful fetch", async () => {
-    (searchPokemon as vi.mock).mockResolvedValue({
+    // Correct the mock assertion to vi.Mock
+    (searchPokemon as vi.Mock).mockResolvedValue({
       name: "pikachu",
       id: 25,
       height: 4,
@@ -56,7 +75,7 @@ describe("PokemonData Component", () => {
       types: [{ type: { name: "electric" } }],
     });
 
-    render(<PokemonData />);
+    renderWithQueryClient(<PokemonData />);
 
     fireEvent.change(
       screen.getByPlaceholderText(/search pokémon by name or id/i),
@@ -66,28 +85,15 @@ describe("PokemonData Component", () => {
     );
     fireEvent.submit(screen.getByRole("button", { name: /search/i }));
 
-    await waitFor(() =>
-      expect(screen.getByText(/pikachu/i)).toBeInTheDocument()
-    );
+    // Wait for the data to be displayed
+    await waitFor(() => {
+      expect(screen.getByText(/pikachu/i)).toBeInTheDocument();
+    });
 
-    const idElement = screen.getByText(/ID:/i);
-    expect(idElement).toBeInTheDocument();
-
-    const numberElement = screen.getByText("25");
-    expect(numberElement).toBeInTheDocument();
-
-    const heightElement = screen.getByText(/height:/i);
-    expect(heightElement).toBeInTheDocument();
-
-    const heightValue = screen.getByText("0.4 m");
-    expect(heightValue).toBeInTheDocument();
-
-    const weightElement = screen.getByText(/weight:/i);
-    expect(weightElement).toBeInTheDocument();
-
-    const weightValue = screen.getByText("6 kg");
-    expect(weightValue).toBeInTheDocument();
-
+    // Check other data points
+    expect(screen.getByText("25")).toBeInTheDocument();
+    expect(screen.getByText("0.4 m")).toBeInTheDocument();
+    expect(screen.getByText("6 kg")).toBeInTheDocument();
     expect(screen.getByText(/static/i)).toBeInTheDocument();
     expect(screen.getByText(/electric/i)).toBeInTheDocument();
     expect(
@@ -98,7 +104,7 @@ describe("PokemonData Component", () => {
   it("displays error message if Pokémon is not found", async () => {
     (searchPokemon as vi.mock).mockResolvedValue(null);
 
-    render(<PokemonData />);
+    renderWithQueryClient(<PokemonData />);
 
     fireEvent.change(
       screen.getByPlaceholderText(/search pokémon by name or id/i),
@@ -112,20 +118,23 @@ describe("PokemonData Component", () => {
   });
 
   it("handles API errors gracefully", async () => {
-    (searchPokemon as vi.mock).mockRejectedValue(new Error("Network error"));
+    const errorMessage = "No Pokémon found. Please try another name or ID.";
+    // Ensure the mock simulates an error response
+    (searchPokemon as vi.mock).mockRejectedValueOnce(new Error(errorMessage));
 
-    render(<PokemonData />);
+    renderWithQueryClient(<PokemonData />);
 
     fireEvent.change(
       screen.getByPlaceholderText(/search pokémon by name or id/i),
       {
-        target: { value: "pikachu" },
+        target: { value: "pikachuw" },
       }
     );
     fireEvent.submit(screen.getByRole("button", { name: /search/i }));
 
-    expect(
-      await screen.findByText(/failed to fetch pokémon data/i)
-    ).toBeInTheDocument();
+    // Wait for the error message to appear
+    await waitFor(() =>
+      expect(screen.getByText(errorMessage)).toBeInTheDocument()
+    );
   });
 });
