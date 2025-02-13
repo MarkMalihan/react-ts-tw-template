@@ -204,7 +204,7 @@ export const Button = ({
 
 ## Dependencies
 
-- **React**: ^18.x
+- **React**: ^19.x
 - **TypeScript**: ^5.x
 - **Tailwind CSS**: ^4.x
 - **Vite**: ^6.x
